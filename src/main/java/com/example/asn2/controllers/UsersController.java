@@ -36,11 +36,6 @@ public class UsersController {
         return "users/showAll";
     }
 
-    //public String mainpage(Model model) {
-
-        //model.addAttribute("cal", new Calc());
-        //return "mainpage";
-    //}
 
     @PostMapping("/users/add")
     public String addUser(@RequestParam Map<String, String> newuser, HttpServletResponse response){
@@ -55,15 +50,11 @@ public class UsersController {
         response.setStatus(201);
         return "users/addedUser";
     }
-    //@PostMapping("/users/delete")
-    //public String deleteUser(@RequestParam String uid, HttpServletResponse response){
-        //System.out.println(uid);
-        //return "users/showAll";
-    //}
+    
     @DeleteMapping("/users/delete/{uid}")
     public String deleteById(@PathVariable("uid") int uid) {
         //System.out.println(uid);
-        userRepo.deleteById(uid);
+        userRepo.deleteById(uid); //delete user by id
         
         return "users/showAll";
     }
@@ -92,7 +83,9 @@ public class UsersController {
 
         int id = Integer.parseInt(uid);
 
-        Users users = userRepo.findById(id).get();
+        Users users = userRepo.findById(id).get(); //get users by order of id
+
+        //using setters to set new data to the old data upon editing
         users.setName(newName);
         users.setWeight(newWeight);
         users.setheight(newHeight);
@@ -101,7 +94,7 @@ public class UsersController {
         userRepo.save(users);
         //response.setStatus(201);
 
-        return "redirect:/users/view";
+        return "redirect:/users/view"; //redirect back to the table
 
     }
 
